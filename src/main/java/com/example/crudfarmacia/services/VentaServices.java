@@ -1,6 +1,6 @@
 package com.example.crudfarmacia.services;
 
-import com.example.crudfarmacia.dto.MedicamentoDto;
+
 import com.example.crudfarmacia.dto.VentaDto;
 import com.example.crudfarmacia.entity.MedicamentoEntity;
 import com.example.crudfarmacia.entity.VentaEntity;

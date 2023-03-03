@@ -40,10 +40,10 @@ public class MedicamentoEntity {
    private int stock;
 
    @Column(name = "valor_unitario", nullable = false)
-   private Double valorUnitario;
+   private Integer valorUnitario;
 
    @Column(name = "estado", nullable = false)
-   private Boolean estado;
+   private Boolean estado = Boolean.FALSE;
 
 
 //   /*Relacion con categoriaEntity -> Mapeo BD*/
@@ -108,11 +108,11 @@ public class MedicamentoEntity {
       this.stock = stock;
    }
 
-   public Double getValorUnitario() {
+   public Integer getValorUnitario() {
       return valorUnitario;
    }
 
-   public void setValorUnitario(Double valorUnitario) {
+   public void setValorUnitario(Integer valorUnitario) {
       this.valorUnitario = valorUnitario;
    }
 

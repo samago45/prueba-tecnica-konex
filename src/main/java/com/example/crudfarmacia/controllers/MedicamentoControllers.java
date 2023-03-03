@@ -2,6 +2,7 @@ package com.example.crudfarmacia.controllers;
 
 import com.example.crudfarmacia.dto.MedicamentoDto;
 import com.example.crudfarmacia.services.MedicamentoServices;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,45 +15,45 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/medicamento")
+@RequestMapping("/api")
 public class MedicamentoControllers {
 
 
    @Autowired
    private MedicamentoServices medicamentoServices;
 
-//Funciona
-   @GetMapping("/")
-   public ResponseEntity<List<MedicamentoDto>> findAll() {
-      return new ResponseEntity<>(medicamentoServices.findAll(), HttpStatus.OK) ;
-   }
 
-   @GetMapping("page")
-   public ResponseEntity<Page<MedicamentoDto>> findAllpage( final Pageable pageable) {
+   @GetMapping("/medicamento")
+   @ApiOperation(value = "Obtener todos los medicamentos, permite paginacion y filtrado")
+   public ResponseEntity<Page<MedicamentoDto>> findAll( final Pageable pageable) {
       return new ResponseEntity<>(medicamentoServices.finaAll( pageable), HttpStatus.OK) ;
    }
 
-//Funciona
-   @GetMapping("/buscar/{id}")
+
+   @GetMapping("/medicamento/{id}")
+   @ApiOperation(value = "Obtener un medicamento por id")
    private ResponseEntity<Optional<MedicamentoDto>> get(@PathVariable final Long id)   {
-      return  new ResponseEntity<>(medicamentoServices.findById(id) , HttpStatus.OK);
+      return new ResponseEntity<>(medicamentoServices.findById(id) , HttpStatus.OK);
    }
 
-//Funciona
-   @PostMapping(value = "guardar")
+
+   @PostMapping(value = "/medicamento")
+   @ApiOperation(value = "Permite crear un  nuevo medicamento")
    public ResponseEntity<MedicamentoDto> create(@Validated @RequestBody MedicamentoDto request)  {
-      return new ResponseEntity<>(medicamentoServices.save(request) , HttpStatus.OK);
+      return new ResponseEntity<>(medicamentoServices.save(request) , HttpStatus.CREATED);
    }
 //No esta funcioando
-   @PostMapping("/actualizar/{id}")
-   private void update(@PathVariable final Long id, @Validated @RequestBody MedicamentoDto request)  {
+   @PostMapping("/medicamento/{id}")
+   @ApiOperation(value = "Permite actualizar un medicamento por id")
+   private ResponseEntity<?> update( @PathVariable final Long id, @Validated @RequestBody MedicamentoDto request)  {
        medicamentoServices.update(id, request);
+   return new ResponseEntity<>("Se actualizo correctamente",HttpStatus.OK);
    }
 
    @DeleteMapping("/deleted/{id}")
-   private ResponseEntity<MedicamentoDto> eliminar(@PathVariable final Long id) {
+   private ResponseEntity<?> eliminar(@PathVariable final Long id) {
       medicamentoServices.delete(id);
-     return new ResponseEntity<>( HttpStatus.OK);
+     return new ResponseEntity<>( "Se alimino correctamente el medicamento",HttpStatus.OK);
 
    }
 }

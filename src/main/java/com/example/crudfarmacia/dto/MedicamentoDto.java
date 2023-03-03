@@ -1,5 +1,11 @@
 package com.example.crudfarmacia.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.Date;
@@ -9,19 +15,36 @@ public class MedicamentoDto {
 
    private Long id;
 
+   @NotBlank(message = "Nombre del Medicamento ")
+   @Size(min = 1, max = 50, message = "El  nombre debe tener entre 1 y 50 caracteres")
+   @ApiModelProperty(notes = "Medicamento ", example = "Dolanet", required = true)
+
    private String nombre;
+
+   @NotBlank(message = "Nombre del Laboratorio ")
+   @Size(min = 1, max = 50, message = " El nombre debe tener entre 1 y 50 caracteres")
+   @ApiModelProperty(notes = "Laboratorio ", example = "Lasca", required = true)
 
    private String laboratorioDeFabricacion;
 
+//   @NotBlank(message = "Fecha de Fabricacion ")
+//   @ApiModelProperty(notes = "Fecha de Fabricacion del Medicamento ", example = "2020-01-02", required = true)
+
    private Date fechaDeFabricacion;
+
+//   @NotNull(message = "Fecha de Fabricacion ")
+//   @DateTimeFormat(pattern = "dd-mm-yyyy")
 
    private Date fechaDeVencimento;
 
+   @Positive(message = "El stock debe ser mayor a 0")
+   @ApiModelProperty(notes = "Stock", example = "1", required = true)
+
    private int stock;
 
-   private Double valorUnitario;
+   private Integer valorUnitario;
 
-   private Boolean estado =Boolean.FALSE;
+
 
 
    //getter and setter
@@ -75,19 +98,13 @@ public class MedicamentoDto {
       this.stock = stock;
    }
 
-   public Double getValorUnitario() {
+   public Integer getValorUnitario() {
       return valorUnitario;
    }
 
-   public void setValorUnitario(Double valorUnitario) {
+   public void setValorUnitario(Integer valorUnitario) {
       this.valorUnitario = valorUnitario;
    }
 
-   public Boolean getEstado() {
-      return estado;
-   }
 
-   public void setEstado(Boolean estado) {
-      this.estado = estado;
-   }
 }
